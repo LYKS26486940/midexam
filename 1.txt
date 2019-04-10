@@ -1,0 +1,77 @@
+#include <Keypad.h>
+const byte ROWS = 4;
+const byte COLS = 4;
+char keys[ROWS][COLS] = {
+  {'F', 'E', 'D', 'C'},
+  {'B', '3', '6', '9'},
+  {'A', '2', '5', '8'},
+  {'0', '1', '4', '7'}
+};
+byte rowPins[ROWS] = {5, 4, 3, 2};
+byte colPins[COLS] = {13, 12, 11, 10};
+Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
+char key;
+char key2;
+char key3;
+int ans=0;
+void setup() {
+  Serial.begin(9600);
+}
+void loop() {
+  while (1) {
+    key = keypad.getKey();
+    if (key != NO_KEY) {
+      if (key >= '1' && key <= '9') {
+        Serial.print("The first number is ");
+        Serial.println(key);
+        break;
+      }
+    }
+  }
+  while (1) {
+    key2 = keypad.getKey();
+
+    if (key2 != NO_KEY) {
+      if (key2 >= '1' && key2 <= '9') {
+        Serial.print("The second number is ");
+        Serial.println(key2);
+        break;
+      }
+
+    }
+  }
+  while (1) {
+    key3 = keypad.getKey();
+    ans=0;
+    if (key3 != NO_KEY) {
+      if (key3 == 'A') {
+        Serial.print("The operation is ");
+        Serial.println("+");
+        ans=(key-'0')+(key2-'0');
+        break;
+      }
+      if (key3 == 'B') {
+        Serial.print("The operation is");
+        Serial.println("-");
+        ans=(key-'0')-(key2-'0');
+        break;
+      }
+      if (key3 == 'C') {
+        Serial.print("The operation is");
+        Serial.println("*");
+        ans=(key-'0')*(key2-'0');
+        break;
+      }
+      if (key3 == 'D') {
+        Serial.print("The operation is ");
+        Serial.println("/");
+        ans=(key-'0')/(key2-'0');
+        break;
+      }
+
+    }
+  }
+  Serial.print("The result is ");
+  Serial.println(ans);
+  Serial.println();
+}
